@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		ES_WC_Integration_ActiveCampaign
  * @extends		WC_Integration
- * @version		2.1.4
+ * @version		2.1.5
  * @package		WooCommerce ActiveCampaign
  * @author 		EqualServing
  */
@@ -18,6 +18,27 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 
 	protected $activecampaign_lists, $product_lists;
+	public $id;
+	public $method_title;
+	public $method_description;
+	public $error_msg;
+	public $dependencies_found;
+	public $params;
+	public $activecampaign_url;
+	public $activecampaign_key;
+	public $activecampaign_tags_list;
+	public $enabled;
+	public $logdata;
+	public $occurs;
+	public $list;
+	public $double_optin;
+	public $groups;
+	public $display_opt_in;
+	public $opt_in_label;
+	public $opt_in_position;
+	public $purchased_product_tag_add;
+	public $tag_purchased_products;
+	public $contact_tag;
 
 	/**
 	 * Init and hook in the integration.

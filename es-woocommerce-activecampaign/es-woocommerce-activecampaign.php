@@ -3,12 +3,12 @@
 Plugin Name: ES Woocommerce ActiveCampaign
 Plugin URI: https://www.equalserving.com/wordpress-plugins-equalserving/woocommerce-with-activecampaign/
 Description: Integrates Woocommerce with ActiveCampaign by adding customers to ActiveCampaign at time of purchase.
-Version: 2.1.4
+Version: 2.1.5
 Author: EqualServing.com
 Author URI: http://www.equalserving.com/
-Tested up to: 6.4.3
+Tested up to: 6.6.2
 WC requires at least: 3.6
-WC tested up to: 8.6.1
+WC tested up to: 9.3.3
 */
 
 add_action( 'plugins_loaded', 'es_woocommerce_activecampaign_init', 0 );
