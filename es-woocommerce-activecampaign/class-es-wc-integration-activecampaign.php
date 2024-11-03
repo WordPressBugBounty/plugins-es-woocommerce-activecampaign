@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		ES_WC_Integration_ActiveCampaign
  * @extends		WC_Integration
- * @version		2.1.5
+ * @version		2.1.6
  * @package		WooCommerce ActiveCampaign
  * @author 		EqualServing
  */
@@ -314,7 +314,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 				$order_opt_in = $order->get_meta('es_wc_activecampaign_opt_in');
 			}
 			if ($this->logdata == 'yes') {
-				$this->log_this("debug", "order_status_changed isset(opt_in): ". isset($_POST['es_wc_activecampaign_opt_in'])." es_wc_activecampaign_opt_in: ".wc_print_r($order_opt_in)." order_opt_in: ".$order_opt_in." _POST: ".wc_print_r($_POST, true)." items: ".wc_print_r($item_details, TRUE));
+				$this->log_this("debug", "order_status_changed isset(opt_in): ". isset($_POST['es_wc_activecampaign_opt_in'])." es_wc_activecampaign_opt_in: ".wc_print_r($order_opt_in, TRUE)." order_opt_in: ".$order_opt_in." _POST: ".wc_print_r($_POST, TRUE)." items: ".wc_print_r($item_details, TRUE));
 			}
 
 
@@ -322,7 +322,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 			if ( $order_opt_in == "yes" || (isset($this->display_opt_in) && ($this->display_opt_in == 'no' || $this->display_opt_in == 'must'))) {
 
 				if ($this->logdata == 'yes') {
-					$this->log_this("debug", "order_status_changed isset(opt_in): ". isset($_POST['es_wc_activecampaign_opt_in'])." es_wc_activecampaign_opt_in: ".wc_print_r($order_opt_in). " display_opt_in: ".$this->display_opt_in );
+					$this->log_this("debug", "order_status_changed isset(opt_in): ". isset($_POST['es_wc_activecampaign_opt_in'])." es_wc_activecampaign_opt_in: ".wc_print_r($order_opt_in, TRUE). " display_opt_in: ".$this->display_opt_in );
 				}
 
 				$this->subscribe(

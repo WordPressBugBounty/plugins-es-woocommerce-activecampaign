@@ -7,7 +7,7 @@ Tags: woocommerce, activecampaign
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 6.6.2
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 WC requires at least: 3.6
 WC tested up to: 9.3.3
 
@@ -69,6 +69,12 @@ will display on the WooCommerce Checkout page.
 The EqualServing team does not always provide active support for the WooCommerce ActiveCampaign plugin on the WordPress.org forums. One-on-one email support is available at [EqualServing Help Desk](https://equalserving.com/support).
 
 == Changelog ==
+
+= 2.1.6 =
+
+Release Date: Nov 3, 2024
+
+* Correct wc_print_r() error.
 
 = 2.1.5 =
 
