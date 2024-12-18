@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		ES_WC_Integration_ActiveCampaign
  * @extends		WC_Integration
- * @version		2.1.6
+ * @version		2.1.7
  * @package		WooCommerce ActiveCampaign
  * @author 		EqualServing
  */
@@ -73,7 +73,8 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 		$this->logdata        = $this->get_option( 'logdata' );
 
 		// Load the settings
-		$this->init_form_fields();
+		// 2024-12-18 Change timing
+		//$this->init_form_fields();
 		$this->init_settings();
 
 		$this->occurs         = $this->get_option( 'occurs' );
@@ -473,8 +474,10 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 			$this->get_ac_tags_list();
 
 			$list_help = 'All customers will be added to this list. <a href="admin.php?'.http_build_query(array_merge($_GET, array("reset"=>"yes"))).'">Click here to reset lists and tags</a>.';
+				$list_help .= '<br />To verify that your API URL and KEY are correct <a href="'.$default_ac_url.'/api/3/addresses?api_key='.$default_ac_key.'" target="_blank">click here</a>. If the settings are correct, you should see your physical address(es) listed.';
 			if (empty($this->activecampaign_lists)) {
 				$list_help .= '<br /><strong>NOTE: If this dowpdown list is empty AND you have entered the API URL and Key correctly, please save your settings and reload the page. <a href="'.$_SERVER['REQUEST_URI'].'">[Click Here]</a></strong>';
+				$list_help .= '<br />To verify that your API URL and KEY are correct <a href="'.$default_ac_url.'/api/3/addresses?api_key='.$default_ac_key.'" target="_blank">click here</a>. If the settings are correct, you should see your physical address(es) listed.';
 			}
 
 			$this->form_fields = array(
@@ -640,7 +643,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 					set_transient("es_wc_activecampaign_errors", $error_msg, 45);
 
 					wp_mail( get_option('admin_email'), __( 'Retrieve lists failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
-					if ($this->logdata == 'yes') {
+					if ($this->logdata == 'yes' && isset($retval)) {
 						$total = count((array)$retval);
 						$this->log_this("debug", __FUNCTION__. " (". $api_action .") number of elements returned: ". $total);
 					}
@@ -969,6 +972,9 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 	 */
 
 	function admin_options() {
+		// Load the settings
+		// 2024-12-18 Change timing
+		$this->init_form_fields();
 		echo '<table><tboby><tr><td>';
 		echo '<div class="column-2">';
 		echo '<h3>';
