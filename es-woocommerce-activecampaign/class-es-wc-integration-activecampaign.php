@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		ES_WC_Integration_ActiveCampaign
  * @extends		WC_Integration
- * @version		2.1.7
+ * @version		2.1.8
  * @package		WooCommerce ActiveCampaign
  * @author 		EqualServing
  */
@@ -73,8 +73,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 		$this->logdata        = $this->get_option( 'logdata' );
 
 		// Load the settings
-		// 2024-12-18 Change timing
-		//$this->init_form_fields();
+		$this->init_form_fields();
 		$this->init_settings();
 
 		$this->occurs         = $this->get_option( 'occurs' );
@@ -972,9 +971,6 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 	 */
 
 	function admin_options() {
-		// Load the settings
-		// 2024-12-18 Change timing
-		$this->init_form_fields();
 		echo '<table><tboby><tr><td>';
 		echo '<div class="column-2">';
 		echo '<h3>';
