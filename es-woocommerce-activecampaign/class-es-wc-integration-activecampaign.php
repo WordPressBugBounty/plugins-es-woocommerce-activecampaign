@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		ES_WC_Integration_ActiveCampaign
  * @extends		WC_Integration
- * @version		2.1.8
+ * @version		2.1.9
  * @package		WooCommerce ActiveCampaign
  * @author 		EqualServing
  */
@@ -94,7 +94,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 		$this->contact_tag = $this->get_option('contact_tag');
 
 		// Hooks
-		add_action( 'admin_notices', array( &$this, 'checks' ) );
+		add_action( 'admin_notices', array( &$this, 'add_settings_errors' ) );
 		add_action( 'woocommerce_update_options_integration_' .  $this->id, array( $this, 'process_admin_options') );
 
 		// We would use the 'woocommerce_new_order' action but first name, last name and email address (order meta) is not yet available,
@@ -124,6 +124,17 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 
 	}
 
+	function add_settings_errors() {
+		if ( $error = get_transient( "es_wc_activecampaign_errors" ) ) { ?>
+		    <div class="notice notice-error is-dismissible">
+		        <p><strong>ActiveCampaign error</strong>: <?php echo $error; ?></p>
+		    </div><?php
+
+		    delete_transient("es_wc_activecampaign_errors");
+		}
+	}
+
+
 	/**
 	 * Check if the user has enabled the plugin functionality, but hasn't provided an api key.
 	 *
@@ -134,24 +145,17 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 	public function checks() {
 		global $pagenow;
 
-		if ( $error = get_transient( "es_wc_activecampaign_errors" ) ) { ?>
-		    <div class="error notice">
-		        <p><strong>ActiveCampaign error</strong>: <?php echo $error; ?></p>
-		    </div><?php
-
-		    delete_transient("es_wc_activecampaign_errors");
-		}
-
+		delete_transient( 'es_wc_activecampaign_list_' . md5( $this->activecampaign_key ) );
 		if ($pagenow == "admin.php" && isset($_REQUEST["page"]) && $_REQUEST["page"] == "wc-settings" && isset($_REQUEST["tab"]) && $_REQUEST["tab"] == "integration") {
 			if ( $this->enabled == 'yes' ) {
 				// Check required fields
 				if(!$this->has_api_info()) {
 					if (!$this->has_key() && !$this->has_url()) {
-						echo '<div class="error notice"><p>' . sprintf( __('<strong>ActiveCampaign error</strong>: Please enter your API URL and Key <a href="%s">here</a>', 'es_wc_activecampaign'), admin_url('options-general.php?page=activecampaign' ) ) . '</p></div>';
+						echo '<div class="notice notice-error is-dismissible"><p>' . sprintf( __('<strong>ActiveCampaign error</strong>: Please enter your API URL and Key <a href="%s">here</a>', 'es_wc_activecampaign'), admin_url('admin.php?page=wc-settings&tab=integration&section=activecampaign' ) ) . '</p></div>';
 					} elseif (!$this->has_key() ) {
-						echo '<div class="error notice"><p>' . sprintf( __('<strong>ActiveCampaign error</strong>: Please enter your API Key <a href="%s">here</a>', 'es_wc_activecampaign'), admin_url('options-general.php?page=activecampaign' ) ) . '</p></div>';
+						echo '<div class="notice notice-error is-dismissible"><p>' . sprintf( __('<strong>ActiveCampaign error</strong>: Please enter your API Key <a href="%s">here</a>', 'es_wc_activecampaign'), admin_url('admin.php?page=wc-settings&tab=integration&section=activecampaign' ) ) . '</p></div>';
 					} elseif (!$this->has_url()) {
-						echo '<div class="error notice"><p>' . sprintf( __('<strong>ActiveCampaign error</strong>: Please enter your API Key <a href="%s">here</a>', 'es_wc_activecampaign'), admin_url('options-general.php?page=activecampaign' ) ) . '</p></div>';
+						echo '<div class="notice notice-error is-dismissible"><p>' . sprintf( __('<strong>ActiveCampaign error</strong>: Please enter your API Key <a href="%s">here</a>', 'es_wc_activecampaign'), admin_url('admin.php?page=wc-settings&tab=integration&section=activecampaign' ) ) . '</p></div>';
 					}
 					return;
 				} else {
@@ -178,7 +182,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 						// Email admin
 						$error_msg = sprintf( __( 'ActiveCampaign credentials check failed: %s', 'es_wc_activecampaign' ), $error_msg_object->get_error_message() ) ;
 						$this->log_this("error", $error_msg);
-						$this->error_msg = $msg;
+						$this->error_msg = $error_msg;
 						set_transient("es_wc_activecampaign_errors", $error_msg, 45);
 
 						wp_mail( get_option('admin_email'), __( 'ActiveCampaign credentials check failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
@@ -445,6 +449,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 
 	public function init_form_fields() {
 		if ( is_admin() ) {
+		    delete_transient("es_wc_activecampaign_errors");
 			if ($this->has_api_info()) {
 				array_merge( array( '' => __('Select a list...', 'es_wc_activecampaign' ) ), $this->activecampaign_lists );
 			} else {
@@ -971,11 +976,13 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 	 */
 
 	function admin_options() {
-		echo '<table><tboby><tr><td>';
+		echo '<table><tbody><tr><td>';
 		echo '<div class="column-2">';
 		echo '<h3>';
 		_e( 'ActiveCampaign', 'es_wc_activecampaign' );
 		echo '</h3>';
+		$this->checks();
+
 		if ($this->dependencies_found) {
 			echo '<p>';
 			_e( 'Enter your ActiveCampaign settings below to control how WooCommerce integrates with your ActiveCampaign lists.', 'es_wc_activecampaign' );

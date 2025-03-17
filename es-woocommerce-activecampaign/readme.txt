@@ -6,10 +6,10 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: woocommerce, activecampaign
 Requires at least: 4.4
 Requires PHP: 5.3
-Tested up to: 6.7.1
-Stable tag: 2.1.8
+Tested up to: 6.7.2
+Stable tag: 2.1.9
 WC requires at least: 3.6
-WC tested up to: 9.5.1
+WC tested up to: 9.7.1
 
 Easily add ActiveCampaign integration to WooCommerce.
 
@@ -69,6 +69,12 @@ will display on the WooCommerce Checkout page.
 The EqualServing team does not always provide active support for the WooCommerce ActiveCampaign plugin on the WordPress.org forums. One-on-one email support is available at [EqualServing Help Desk](https://equalserving.com/support).
 
 == Changelog ==
+
+= 2.1.9 =
+
+Release Date: Mar 16, 2025
+
+* Change timing of server outage errors.
 
 = 2.1.8 =
 
