@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		ES_WC_Integration_ActiveCampaign
  * @extends		WC_Integration
- * @version		2.1.9
+ * @version		2.1.10
  * @package		WooCommerce ActiveCampaign
  * @author 		EqualServing
  */
@@ -185,7 +185,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 						$this->error_msg = $error_msg;
 						set_transient("es_wc_activecampaign_errors", $error_msg, 45);
 
-						wp_mail( get_option('admin_email'), __( 'ActiveCampaign credentials check failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
+						//wp_mail( get_option('admin_email'), __( 'ActiveCampaign credentials check failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
 					}
 				}
 			}
@@ -646,7 +646,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 					$this->error_msg = $error_msg;
 					set_transient("es_wc_activecampaign_errors", $error_msg, 45);
 
-					wp_mail( get_option('admin_email'), __( 'Retrieve lists failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
+					//wp_mail( get_option('admin_email'), __( 'Retrieve lists failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
 					if ($this->logdata == 'yes' && isset($retval)) {
 						$total = count((array)$retval);
 						$this->log_this("debug", __FUNCTION__. " (". $api_action .") number of elements returned: ". $total);
@@ -735,7 +735,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 					$this->error_msg = $error_msg;
 					set_transient("es_wc_activecampaign_errors", $error_msg, 45);
 
-					wp_mail( get_option('admin_email'), __( 'Retrieve tags list failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
+					//wp_mail( get_option('admin_email'), __( 'Retrieve tags list failed (ActiveCampaign)', 'es_wc_activecampaign' ), ' ' . $error_msg );
 					if ($this->logdata == 'yes') {
 						$total = count((array)$retval);
 						$this->log_this("debug", __FUNCTION__. " (". $api_action .") number of elements returned: ". $total);
