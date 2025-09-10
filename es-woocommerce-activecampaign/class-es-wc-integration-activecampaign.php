@@ -50,7 +50,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 	public function __construct() {
 
 		$this->id					= 'activecampaign';
-		$this->method_title     	= __( 'ActiveCampaign', 'es_wc_activecampaign' );
+		$this->method_title     	= __( 'ActiveCampaign Connection by EqualServing', 'es_wc_activecampaign' );
 		$this->method_description	= __( 'ActiveCampaign is a marketing automation service.', 'es_wc_activecampaign' );
 		$this->error_msg            = '';
 		$this->dependencies_found = 1;
@@ -979,7 +979,7 @@ class ES_WC_Integration_ActiveCampaign extends \WC_Integration {
 		echo '<table><tbody><tr><td>';
 		echo '<div class="column-2">';
 		echo '<h3>';
-		_e( 'ActiveCampaign', 'es_wc_activecampaign' );
+		_e( 'Connect WooCommerce to ActiveCampaign by EqualServing', 'es_wc_activecampaign' );
 		echo '</h3>';
 		$this->checks();
 
